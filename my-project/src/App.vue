@@ -13,11 +13,21 @@
     <ul>
       <li v-for="(item, index) in objList" :class="{odd: index % 2}">{{ index }}- {{ item }}</li>
     </ul>
-    <br>
+    <br><br>
     <a v-if="isPartA">PartA</a>
     <a v-else>no-data</a>
     <!--<a v-show="!isPartA">PartB</a>-->
     <button v-on:click="toggle">toggle</button>
+    <!--CSS3过渡动画, 动态绑定组件-->
+    <!--标签名相同动画不执行, 指定不同key值-->
+    <transition name="fade" mode="out-in">
+      <!--<div :is="currentView"></div>-->
+      <p v-if="show" key="1">in show</p>
+      <p v-else key="2">no in show</p>
+    </transition>
+    <button @click="show = !show">showCom</button>
+    <button @click="toggleCom">toggleCom</button>
+    <br><br>
     <input @keydown="onkeydown" placeholder="keydown">
     <input @keydown.13="onkeydown">
     <!--表单-->
@@ -30,7 +40,7 @@
     <!--<input v-model.lazy="myValue" type="text" placeholder="v-model.lazy">-->
     <!--<input v-model.number="myValue" type="text" placeholder="v-model.number">-->
     <!--<input v-model.trim="myValue" type="text" placeholder="v-model.trim">-->
-    <br>
+    <br><br>
     <input v-model="myBox" type="checkbox" value="apple">
     <input v-model="myBox" type="checkbox" value="cherry">
     <input v-model="myBox" type="checkbox" value="bannana">
@@ -53,19 +63,32 @@
     <!--样式,v-bind-->
     <a v-bind:class="[classNameObj,classNameArray, {'black-font':hasErr}]" :style="linkCss">link</a>
     <!--子组件-->
-    <componentA :dataA="dataA"></componentA>
+    <componentA :dataA="dataA" :number-to-do="myVal"></componentA>
     <component-a @my-event="onCompMyEvent"></component-a>
+    <p is="component-a"> </p>
+    <component-a @my-event="onCompMyEvent" :number-to-do="myVal">
+      <p slot="header">我是插槽 xxx header</p>
+    </component-a>
+    <!--动态组件-->
+    <!--缓存，提高加载速度-->
+    <keep-alive>
+      <p :is="currentView"></p>
+    </keep-alive>
+
     <router-view/>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
-import componentA from './a'
+  import componentA from './a';
+  import componentB from './b'
 export default {
   name: 'App',
   data () {
     return {
+      show: true,
+      currentView: 'component-a',
       myVal:null,
       selectOption :[
         {
@@ -117,7 +140,8 @@ export default {
     }
   },
   components: {
-    componentA
+    componentA,
+    componentB
   },
   methods: {
     addItem () {
@@ -146,6 +170,9 @@ export default {
 //      return this.myValue.replace(/\d/g, '');
       return Date.now();
     },
+    toggleCom () {
+      this.currentView = this.currentView === 'component-a' ? 'component-b':'component-a';
+    }
   },
   //计算属性
   //其他属性的变化同步更新
@@ -174,4 +201,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s ease-out;
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0;
+  }
 </style>
