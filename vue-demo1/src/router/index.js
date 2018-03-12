@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import A from '../components/a'
 import B from '../components/b'
 import RedA from '../components/reda'

@@ -3,37 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Vuex from 'vuex'
+import store from './vuex/vuex'
 Vue.config.productionTip = false
-Vue.use(Vuex)
-let store = new Vuex.Store({
-  state: {
-    totalPrice: 0
-  },
-  getters: {
-    getTotal (state) {
-      return state.totalPrice
-    }
-  },
-  //mutations 同步操作
-  mutations: {
-    increment (state, price) {
-      state.totalPrice += price;
-    },
-    decrement (state, price) {
-      state.totalPrice -= price;
-    }
-  },
-  //actions异步请求-api
-  actions: {
-    increase (context, price) {
-      // api(id, function () {
-      //
-      // })
-      context.commit('increment', price)
-    }
-  }
-})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
