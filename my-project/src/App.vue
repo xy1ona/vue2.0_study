@@ -74,7 +74,8 @@
     <keep-alive>
       <p :is="currentView"></p>
     </keep-alive>
-
+    <!--自定义指定-->
+    <p  v-color="'red'">自定义指定</p>
     <router-view/>
   </div>
 </template>
@@ -188,6 +189,12 @@ export default {
     myVal(oldVal, newVal) {
       console.log(oldVal, newVal)
     }
+  },
+  // 注册局部指令
+  directives: {
+    color (el, binding) {
+      el.style.color = binding.value
+    },
   }
 }
 </script>
