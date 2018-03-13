@@ -5,8 +5,6 @@
           <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li> </li>
-            <li class="nav-pile">|</li>
             <li >退出</li>
             <li>登录</li>
             <li class="nav-pile">|</li>

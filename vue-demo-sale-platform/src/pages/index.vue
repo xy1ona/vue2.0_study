@@ -25,12 +25,12 @@
     </div>
     <div class="index-right">
       <div class="index-board-list">
-        <div
-          class="index-board-item" >
+        <div v-for="(item,index) in  boardList" class="index-board-item" :class="[{'line-last' : index % 2 !== 0},'index-board-'+item.id]">
           <div class="index-board-item-inner" >
-            <h2></h2>
-            <p></p>
+            <h2>{{ item.title}}</h2>
+            <p>{{ item.description }}</p>
             <div class="index-board-button">
+              <a class="button">立即购买</a>
             </div>
           </div>
         </div>
@@ -41,6 +41,15 @@
 
 <script>
   export default {
+    created () {
+      this.$http.get('api/getList')
+        .then((res) => {
+          this.newsList = res.data;
+          console.log(this.newsList)
+        },(err) => {
+          console.log(err)
+        })
+    },
     data () {
       return {
         boardList: [
@@ -73,25 +82,7 @@
             saleout: false
           }
         ],
-        newsList: [
-          {
-            title: '数据统计',
-            url: 'http://starcraft.com'
-          },
-          {
-            title: '数据预测',
-            url: 'http://warcraft.com'
-          },
-          {
-            title: '流量分析',
-            url: 'http://overwatch.com',
-            hot: true
-          },
-          {
-            name: '广告发布',
-            url: 'http://hearstone.com'
-          }
-        ],
+        newsList: [],
         productList: {
           pc: {
             title: 'PC产品',
@@ -140,7 +131,7 @@
           }
         }
       }
-    }
+    },
   }
 </script>
 
