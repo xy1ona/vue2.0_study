@@ -12,10 +12,15 @@ const portfinder = require('portfinder')
 
 const express = require('express')
 const app = express()
-var apiRoutes = express.Router()
-app.use('/api',apiRoutes)
 var appData = require('../db.json')
 var getNewsList = appData.getNewsList
+var login = appData.login
+var getPrice = appData.getPrice
+var createOrder = appData.createOrder
+var getOrderList = appData.getOrderList
+
+var apiRoutes = express.Router()
+app.use('/api',apiRoutes)
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -30,12 +35,36 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
-      app.get('/api/getList', (req, res) => {
+      app.get('/api/getNewsList', (req, res) => {
         res.json({
           errno: 0,
-          data: JSON.stringify(getNewsList)
+          data: getNewsList
         })
-      })
+      });
+      app.get('/api/login', (req, res) => {
+        res.json({
+          errno: 0,
+          data: login
+        })
+      });
+      app.get('/api/getPrice', (req, res) => {
+        res.json({
+          errno: 0,
+          data: getPrice
+        })
+      });
+      app.get('/api/createOrder', (req, res) => {
+        res.json({
+          errno: 0,
+          data: createOrder
+        })
+      });
+      app.get('/api/getOrderList', (req, res) => {
+        res.json({
+          errno: 0,
+          data: getOrderList
+        })
+      });
     },
     clientLogLevel: 'warning',
     historyApiFallback: {
