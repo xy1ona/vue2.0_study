@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="index-right">
-      <slide-show :sliders="slides" :inv="invTime" @onChange="doSomethingSlide"></slide-show>
+      <slide-show :sliders="slides" :inv="invTime"></slide-show>
       <div class="index-board-list">
         <div v-for="(item,index) in  boardList" class="index-board-item" :class="[{'line-last' : index % 2 !== 0},'index-board-'+item.id]">
           <div class="index-board-item-inner" >
@@ -70,7 +70,7 @@
           {
             src: require('../assets/slideShow/pic3.jpg'),
             title: 'xxx3',
-            href: 'http://xxx.xxx.com'
+            href: 'detail/publish'
           },
           {
             src: require('../assets/slideShow/pic4.jpg'),
@@ -159,9 +159,6 @@
       }
     },
     methods:{
-      doSomethingSlide(index) {
-        console.log('doSomethingSlide ',index)
-      }
     },
     components: {
       slideShow

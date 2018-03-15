@@ -47,19 +47,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           data: login
         })
       });
-      app.get('/api/getPrice', (req, res) => {
+      app.post('/api/getPrice', (req, res) => {
         res.json({
           errno: 0,
           data: getPrice
         })
       });
-      app.get('/api/createOrder', (req, res) => {
+      app.post('/api/createOrder', (req, res) => {
         res.json({
           errno: 0,
           data: createOrder
         })
       });
-      app.get('/api/getOrderList', (req, res) => {
+      app.post('/api/getOrderList', (req, res) => {
         res.json({
           errno: 0,
           data: getOrderList
