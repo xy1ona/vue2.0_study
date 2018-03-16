@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import { eventBus } from '../../eventBus.js'
   export default {
     props: {
       selections:{
@@ -31,13 +32,20 @@
         isDropDown: false
       }
     },
+    mounted () {
+      eventBus.$on('reset-component', ()=>{
+        this.isDropDown = false
+      })
+    },
     methods: {
       selected (index) {
         this.nowIndex = index
         this.isDropDown = false
         this.$emit('on-change', this.selections[this.nowIndex])
       },
-      dropDown () {
+      dropDown (event) {
+        event.stopPropagation()   //阻止冒泡，eventBus
+        eventBus.$emit('reset-component')  //关掉除自己，其余select
         this.isDropDown = !this.isDropDown
       }
     }
